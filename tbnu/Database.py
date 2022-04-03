@@ -1,9 +1,10 @@
 import pickle
 import math
-from main.Note import Note
+from tbnu.Note import Note
+from pkg_resources import resource_filename
 
 class Database:
-    PATH = 'main/db.pkl'
+    PATH = resource_filename('tbnu', 'db.pkl')
     def __init__(self) -> None:
        self._notes = []
        self.new = True
@@ -25,5 +26,5 @@ class Database:
 
     @staticmethod
     def save(database):
-        with open(database.PATH, 'wb') as f:
+        with open(Database.PATH, 'wb') as f:
             pickle.dump(database, f)

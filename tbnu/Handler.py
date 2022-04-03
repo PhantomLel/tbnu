@@ -1,5 +1,4 @@
 import sys
-from tkinter.tix import Tree
 
 class Handler:
     def __init__(self, argv : sys.argv, database) -> None:
