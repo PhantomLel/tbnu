@@ -10,3 +10,4 @@ TBNU is a super easy to use notes program. Takes no time to set up and has simpl
 - Thats literally it
 
 ## How to Use
+    
