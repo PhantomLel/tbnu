@@ -107,7 +107,7 @@ Commands:
     new [note content]   create a new note
     view NOTE NUMBER     view note at the provided number
     clear                clear output
-    del NOTE NUMBER      delete note at given index
+    del / delete NOTE NUMBER      delete note at given index
     exit / q             quit the program
             """
         )
