@@ -1,6 +1,6 @@
-import sys
-from argparse import ArgumentParser
+import sys, os, platform
 from tbnu.Database import Database
+from argparse import ArgumentParser
 
 class Handler:
     def __init__(self, argv : sys.argv, database) -> None:
@@ -20,6 +20,11 @@ class Handler:
         self.parser.add_argument(
             '-n', '--new',
             help="pass a string to create a new note"
+        )
+        self.parser.add_argument(
+            '-d', '--delete',
+            type=int,
+            help="Delete note at given index"
         )
 
         self.parser.add_argument(
@@ -48,6 +53,7 @@ class Handler:
         options = {
             "view" : self.view,
             "new" : self.new,
+            "delete" : self.delete,
             "db" : lambda: print("Database location: " + str(self.database.PATH)),
             "uninstall" : self.uninstall
         }
@@ -63,9 +69,14 @@ class Handler:
         options = {
             "new" : self.new,
             "view" : self.view,
+            "delete" : self.delete,
             "exit" : self.exit,
             "help" : self.help,
+            "clear" : self.clear,
+            "del" : self.delete,
+            "c" : self.clear,
             "n" : self.new,
+            "d" : self.delete,
             "v" : self.view,
             "e" : self.exit,
             "h" : self.help,
@@ -73,8 +84,8 @@ class Handler:
         }
         # No input, return back
         if len(inp) < 1:
-            return 
-        
+            return
+
         operation = self.inp[0]
         if operation in options:
             try:
@@ -86,6 +97,7 @@ class Handler:
             print(f"Invalid command '{self.inp[0]}'\nType 'help' to get a list of commands")
     
     def help(self):
+        """Print help message"""
         print(
             """
 TBNU -- Help Message
@@ -94,9 +106,18 @@ Commands:
     help                 show this message
     new [note content]   create a new note
     view NOTE NUMBER     view note at the provided number
+    clear                clear output
+    del NOTE NUMBER      delete note at given index
     exit / q             quit the program
             """
         )
+    
+    def clear(self) -> None:
+        """Clear stdout"""
+        if platform.system() == 'Windows':
+            os.system('cls')
+        else:
+            os.system('clear')
 
     def new(self):
         """Make New Note"""
@@ -116,6 +137,27 @@ Commands:
         self.database.add(note)
         print('Note created')
 
+    def delete(self):
+        """Delete message at index"""
+        if self.cli_args:
+            i = self.args.delete
+        else: 
+            if len(self.inp) < 2:
+                print("Usage: delete <note index number>")
+                return
+            
+            try:
+                i = int(self.inp[1])
+            # User inputed an invalid number
+            except ValueError:
+                return
+        note = self.database.delete(i)
+        # Some error getting note
+        if note is None:
+            print(f"Invalid note index '{i}'.")
+            return
+        print(f"Note #{note.INDEX + 1} has been deleted\n{note.content}")
+
     def exit(self):
         print("Thank you for using TBNU")
         Database.save(self.database)
@@ -127,7 +169,6 @@ Commands:
             if len(self.inp) < 2:
                 print("Usage: view <note index number>")
                 return
-            
             try:
                 i = int(self.inp[1])
             except ValueError:
@@ -137,7 +178,7 @@ Commands:
             i = self.args.view
 
         note = self.database.get(i)
-        if not note:
+        if note is None:
             print(f"Invalid note index {i}. Use a negative number to get your most recent notes")
             return
         print(f"Note #{note.INDEX + 1}\n------\n{note.content}")

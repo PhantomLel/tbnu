@@ -1,4 +1,3 @@
-import math
 import pickle
 from pathlib import Path
 from tbnu.Note import Note
@@ -12,24 +11,38 @@ class Database:
     PATH = DIR / 'db.pkl'
     def __init__(self) -> None:
        self._notes = []
+       self.current_index = 0
        self.new = True
+    
+    def validate_index(self, index) -> int:
+        """Fix the given index"""
+        # make sure the index isnt out of bounds
+        if abs(index) > len(self._notes) or index == 0:
+           return 
+        return index if index < 0 else index - 1
 
     def add(self, note):
         """Add note object to database"""
         # add the note with the proper index
-        self._notes.append(Note(note, len(self._notes)))
+        self._notes.append(Note(note, self.current_index))
+        self.current_index += 1
         Database.save(self)
+    
+    def delete(self, index) -> Note:
+        """Delete note at given index and return the deleted note"""
+        index = self.validate_index(index)
+        if index is None:
+            return
+        note = self._notes.pop(index)
+        Database.save(self)
+        return note
 
     def get(self, index):
         # make sure the index isnt out of bounds
-        if abs(index) > len(self._notes) or index == 0:
-            return 
-        
-        if index < 0:
-            pass
-        else:
-            index -=1
-
+        index = self.validate_index(index)
+        # if the index is invalid
+        if index is None:
+            return
         return self._notes[index]
 
     @staticmethod

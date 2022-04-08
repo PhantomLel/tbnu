@@ -1,7 +1,4 @@
-from calendar import day_abbr
 import sys
-
-from gpg import Data
 from tbnu.Handler import Handler
 from tbnu.Database import Database
 
