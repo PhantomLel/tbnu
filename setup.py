@@ -15,7 +15,7 @@ setup(
             'tbnu=tbnu:main'
         ]
     },
-    python_requires='>=2.7',
+    python_requires='>=3.6',
     author='Abdullah Mohammed',
     author_email='aamohammed4556@gmail.com',
     install_requires=["appdirs>=1.4.4"]

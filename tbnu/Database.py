@@ -5,7 +5,7 @@ from appdirs import user_data_dir
 
 class Database:
     # Get the location of the data dir
-    DIR = Path(user_data_dir(appname='tbnu', version="0.1.0"))
+    DIR = Path(user_data_dir(appname='tbnu', version="0.1.2"))
     DIR.mkdir(parents=True, exist_ok=True)
     # This is the actual path to the file
     PATH = DIR / 'db.pkl'
@@ -19,6 +19,9 @@ class Database:
         # make sure the index isnt out of bounds
         if abs(index) > len(self._notes) or index == 0:
            return 
+           # If the index is negative then it stays the same. Otherwise subtract one from it
+           # This is important because negative indices start at -1 e.g. -1 returns last item and -2 returns 2nd last item.
+           # Positive indices start at 0, so if user passes in 1, it needs to be turned into 0.
         return index if index < 0 else index - 1
 
     def add(self, note):

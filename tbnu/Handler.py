@@ -48,8 +48,10 @@ class Handler:
         # Check if any args have been provided
         if not any(dict_args.values()):
             return
-        
+        # If there are cl args, then the program will terminate after handling them
+        # instead of going to normal mode 
         self.cli_args = True
+
         options = {
             "view" : self.view,
             "new" : self.new,
