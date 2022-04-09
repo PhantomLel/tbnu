@@ -33,9 +33,9 @@ class Handler:
             help="show the database location"
         )
         self.parser.add_argument(
-            '--uninstall',
+            '--delete-notes',
             action='store_true',
-            help="uninstall TBNU from the system"
+            help="delete all notes on the system"
         )
 
         self.args = self.parser.parse_args()
@@ -55,7 +55,7 @@ class Handler:
             "new" : self.new,
             "delete" : self.delete,
             "db" : lambda: print("Database location: " + str(self.database.PATH)),
-            "uninstall" : self.uninstall
+            "delete_notes" : self.uninstall
         }
         # Go through each option. If the option has a value, call the associated function
         for arg in dict_args: 

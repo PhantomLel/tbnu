@@ -57,7 +57,7 @@ $
 
 To remove all note use:
 ```bash
-$ tbnu --uninstall
+$ tbnu --delete-notes
 -- TBNU notes --
 Are you sure you want to delete all notes from this system (y/n)
 >> y
