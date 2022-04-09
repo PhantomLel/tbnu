@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='tbnu',
-    version='0.1.2',
+    version='0.1.3',
     license='MIT',
     description='TBNU is a super simple and easy to use CLI notes application',
     long_description=open('README.md').read(),
