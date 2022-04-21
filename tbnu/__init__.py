@@ -5,7 +5,7 @@ from tbnu.logos import LOGOS
 from tbnu.Handler import Handler
 from tbnu.Database import Database
 
-__version__ = '0.1.2'
+__version__ = '0.1.4'
 
 def check_latest_version(package='tbnu'):
     """Check if tbnu is at the latest version and let the user know if not"""
