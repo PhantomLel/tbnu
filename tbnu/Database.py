@@ -6,7 +6,7 @@ from appdirs import user_data_dir
 
 class Database:
     # Get the location of the data dir
-    DIR = Path(user_data_dir(appname="tbnu", version="0.1.2"))
+    DIR = Path(user_data_dir(appname='tbnu', version="0.1.4"))
     DIR.mkdir(parents=True, exist_ok=True)
     # This is the actual path to the file
     PATH = DIR / "db.pkl"

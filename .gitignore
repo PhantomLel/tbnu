@@ -7,6 +7,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+poetry.lock
 .Python
 build/
 develop-eggs/
@@ -105,3 +106,8 @@ venv.bak/
 
 # vscode
 .vscode/
+files.txt
+
+
+
+

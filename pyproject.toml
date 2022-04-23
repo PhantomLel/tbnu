@@ -1,0 +1,30 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool]
+[tool.poetry]
+authors = ["Abdullah Mohammed <aamohammed4556@gmail.com>"]
+description = "TBNU is a super simple and easy to use CLI notes application"
+license = "MIT"
+name = "tbnu"
+version = "0.1.4"
+keywords = [
+  "notes",
+  "cli",
+  "terminal",
+  "note",
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+appdirs = "^1.4.4"
+art = "^5.6"
+[tool.poetry.dev-dependencies]
+
+wtbnu = "tbnu:main"
+[tool.poetry.urls]
+repository = "https://github.com/PhantomLel/tbnu"
+
+
