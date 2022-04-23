@@ -8,7 +8,6 @@ __pycache__/
 
 # Distribution / packaging
 poetry.lock
-pyproject.toml
 .Python
 build/
 develop-eggs/
@@ -106,3 +105,7 @@ venv.bak/
 .mypy_cache/
 
 files.txt
+
+
+
+
