@@ -5,7 +5,7 @@ import requests
 from tbnu.Handler import Handler
 from tbnu.Database import Database
 
-__version__ = "0.1.4"
+__version__ = "1.0.1"
 
 
 def check_latest_version(package="tbnu"):
@@ -35,7 +35,8 @@ def main():
         database = Database.load()
     else:
         database = Database()
-    # Print one of the random logos
+
+
     if random.randint(1, 2) == 2:
         check_latest_version()
     handler = Handler(sys.argv, database)

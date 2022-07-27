@@ -1,2 +1,0 @@
-/usr/local/bin/tbnu
-/usr/local/lib/python3.8/dist-packages/tbnu-0.1.4-py3.8.egg

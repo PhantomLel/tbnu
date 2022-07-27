@@ -49,6 +49,9 @@ class Database:
         if index is None:
             return
         return self._notes[index]
+    
+    def search(self, query):
+        return list(filter(lambda note: query in note.content, self._notes))
 
     @staticmethod
     def save(database):

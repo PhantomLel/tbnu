@@ -1,5 +1,4 @@
-import random
-import sys, os, platform
+import sys, os, platform, random
 from tbnu.Database import Database
 from argparse import ArgumentParser
 from tbnu.aesthetics.colors import Colors
@@ -28,6 +27,11 @@ class Handler:
         self.parser.add_argument(
             "-d", "--delete", type=int, help="Delete note at given index"
         )
+        self.parser.add_argument(
+            "-s",
+            "--search",
+            help="Enter a string to search for in your notes"
+        )
 
         self.parser.add_argument(
             "--db", action="store_true", help="show the database location"
@@ -48,6 +52,10 @@ class Handler:
     def handle_cli_args(self):
         # Turn the args into a dict for easy access to values
         dict_args = vars(self.args)
+        # Check for quiet mode so that the logo prints before everything else
+        if not dict_args["quiet"]:
+            print(random.choice(LOGOS))
+
         # Check if any args have been provided
         if not any(dict_args.values()):
             return
@@ -59,15 +67,13 @@ class Handler:
             "view": self.view,
             "new": self.new,
             "delete": self.delete,
+            "search": self.search,
             "db": lambda: print(
                 f"Database location: {Colors.GREEN.value} {str(self.database.PATH)} {Colors.WHITE.value}"
             ),
             "delete_notes": self.uninstall,
         }
 
-        # Check for quiet mode so that the logo prints before everything else
-        if not dict_args["quiet"]:
-            print(random.choice(LOGOS))
 
         # Go through each option. If the option has a value, call the associated function
         for arg in dict_args:
@@ -82,9 +88,11 @@ class Handler:
             "view": self.view,
             "delete": self.delete,
             "exit": self.exit,
+            "search": self.search,
             "help": self.help,
             "clear": self.clear,
             "del": self.delete,
+            "s" :self.search,
             "c": self.clear,
             "n": self.new,
             "d": self.delete,
@@ -119,6 +127,7 @@ Commands:
     help                 show this message
     new [note content]   create a new note
     view NOTE NUMBER     view note at the provided number
+    search QUERY         search all notes for a provided query
     clear                clear output
     del / delete NOTE NUMBER      delete note at given index
     exit / q             quit the program
@@ -199,6 +208,23 @@ Commands:
             )
             return
         print(f"Note #{note.INDEX + 1}\n------\n{note.content}")
+    
+    def search(self):
+        """search within all notes and print the notes that match the search"""
+        
+        if not self.cli_args:
+            if len(self.inp) < 2:
+                print("Usage: search <string query>")
+            search_query = self.inp[1]
+        else:
+            search_query = self.args.search
+        
+        notes = self.database.search(search_query)
+        if len(notes) == 0:
+            print(f"You have no notes containing '{search_query}' ")
+
+        for note in notes:
+            print(f"Note #{note.INDEX + 1} | {note.content[:15]}")
 
     def uninstall(self):
         if (
